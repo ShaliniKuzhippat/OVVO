@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:ovvo/screens/viewer.dart';
 import 'dart:convert';
 import 'second_screen.dart'; // Import the new file for viewing the generates slides
 
 void main() {
-  runApp(MyApp());
+  runApp(MaterialApp(
+    title: 'Navigation Basics',
+    home: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -14,13 +18,15 @@ class MyApp extends StatelessWidget {
   final controllerAudience = TextEditingController();
   final controllerSolution = TextEditingController();
   final controllerProposition = TextEditingController();
-  final uriEndpoint = "https://us-central1-ovvo-405a7.cloudfunctions.net/api/firestore/slide/v2/";
+  final uriEndpoint =
+      "https://us-central1-ovvo-405a7.cloudfunctions.net/api/firestore/slide/v2/";
 
   MyApp({super.key});
 
   void submitForm(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      final url = Uri.parse('$uriEndpoint${controllerSolution.text}'); // Replace with your backend API endpoint.
+      final url = Uri.parse(
+          '$uriEndpoint${controllerSolution.text}'); // Replace with your backend API endpoint.
 
       final Map<String, dynamic> data = {
         'name': controllerName.text,
@@ -39,10 +45,15 @@ class MyApp extends StatelessWidget {
 
       if (response.statusCode == 200) {
         print('Data sent successfully!');
+
+        //SecondScreen.show(context);
+
+        print('Now what happens?');
+
         // Navigate to a new screen after successful submission.
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => SecondScreen()),
+          MaterialPageRoute(builder: (context) => Viewer()),
         );
       } else {
         print('Failed to send data. Status code: ${response.statusCode}');
@@ -68,8 +79,7 @@ class MyApp extends StatelessWidget {
                   controller: controllerName,
                   decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
-                      labelText: 'Project name'
-                  ),
+                      labelText: 'Project name'),
                   // The validator receives the text that the user has entered.
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -82,8 +92,7 @@ class MyApp extends StatelessWidget {
                   controller: controllerProblem,
                   decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
-                      labelText: 'Problem statement'
-                  ),
+                      labelText: 'Problem statement'),
                   // The validator receives the text that the user has entered.
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -96,8 +105,7 @@ class MyApp extends StatelessWidget {
                   controller: controllerAudience,
                   decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
-                      labelText: 'Target audience'
-                  ),
+                      labelText: 'Target audience'),
                   // The validator receives the text that the user has entered.
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -109,9 +117,7 @@ class MyApp extends StatelessWidget {
                 TextFormField(
                   controller: controllerSolution,
                   decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Solution'
-                  ),
+                      border: UnderlineInputBorder(), labelText: 'Solution'),
                   // The validator receives the text that the user has entered.
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -124,8 +130,7 @@ class MyApp extends StatelessWidget {
                   controller: controllerProposition,
                   decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
-                      labelText: 'Value proposition'
-                  ),
+                      labelText: 'Value proposition'),
                   // The validator receives the text that the user has entered.
                   validator: (value) {
                     if (value == null || value.isEmpty) {

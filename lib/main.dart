@@ -45,11 +45,11 @@ class MyApp extends StatelessWidget {
         print('Data sent successfully!');
         final Map<String, dynamic> responseData = jsonDecode(response.body);
 
-
         // Navigate to a new screen after successful submission.
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Viewer(responseData: responseData)),
+          MaterialPageRoute(
+              builder: (context) => Viewer(responseData: responseData)),
         );
       } else {
         print('Failed to send data. Status code: ${response.statusCode}');

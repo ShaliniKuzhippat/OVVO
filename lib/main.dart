@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:ovvo/screens/viewer.dart';
 import 'dart:convert';
-import 'second_screen.dart'; // Import the new file for viewing the generates slides
 
 void main() {
   runApp(MaterialApp(
@@ -19,14 +18,13 @@ class MyApp extends StatelessWidget {
   final controllerSolution = TextEditingController();
   final controllerProposition = TextEditingController();
   final uriEndpoint =
-      "https://us-central1-ovvo-405a7.cloudfunctions.net/api/firestore/slide/v2/";
+      "https://us-central1-ovvo-405a7.cloudfunctions.net/api/generate/";
 
   MyApp({super.key});
 
   void submitForm(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      final url = Uri.parse(
-          '$uriEndpoint${controllerSolution.text}'); // Replace with your backend API endpoint.
+      final url = Uri.parse('$uriEndpoint${controllerSolution.text}');
 
       final Map<String, dynamic> data = {
         'name': controllerName.text,
@@ -45,15 +43,13 @@ class MyApp extends StatelessWidget {
 
       if (response.statusCode == 200) {
         print('Data sent successfully!');
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
 
-        //SecondScreen.show(context);
-
-        print('Now what happens?');
 
         // Navigate to a new screen after successful submission.
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Viewer()),
+          MaterialPageRoute(builder: (context) => Viewer(responseData: responseData)),
         );
       } else {
         print('Failed to send data. Status code: ${response.statusCode}');

@@ -18,16 +18,18 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft])
       .then((_) {
-    runApp(new Viewer());
+    //runApp(new Viewer(downloadLink: ""));
   });
 
   //runApp(const Viewer());
 }
 
 class Viewer extends StatelessWidget {
-  const Viewer({super.key});
   final String _url_ppt =
       'https://brand.uconn.edu/wp-content/uploads/sites/2820/2019/08/white-oakleaf-standard-temp.pptx';
+  Viewer({required this.responseData});
+
+  final Map<String, dynamic> responseData;
 
   @override
   void initState() {
@@ -53,7 +55,7 @@ class Viewer extends StatelessWidget {
           onPressed: () {
             print("button pressed");
             FileDownloader.downloadFile(
-                url: _url_ppt,
+                url: responseData["fileName"] as String,
                 onDownloadError: (String error) {
                   print('Error while downloading: $error');
                 },

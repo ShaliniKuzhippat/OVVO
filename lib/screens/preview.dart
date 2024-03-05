@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:open_file/open_file.dart';
@@ -35,10 +34,11 @@ class _PreviewState extends State<Preview> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Expanded(
-            child: SfPdfViewer.network(_url_pdf),
-            flex: 2, // Adjust this flex factor to change the space allocation
+            flex: 2,
+            child: SfPdfViewer.network(_url_pdf), // Adjust this flex factor to change the space allocation
           ),
           Expanded(
+            flex: 1,
             child: Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -48,13 +48,12 @@ class _PreviewState extends State<Preview> {
                     child: Text('Open result: $_openResult'),
                   ),
                   ElevatedButton(
-                    child: const Text('Open PPTX File'),
                     onPressed: openFile,
+                    child: const Text('Open PPTX File'),
                   ),
                 ],
               ),
-            ),
-            flex: 1, // Adjust this flex factor to change the space allocation
+            ), // Adjust this flex factor to change the space allocation
           ),
         ],
       ),
